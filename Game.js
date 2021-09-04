@@ -6,17 +6,25 @@ class Level extends Phaser.Scene {
       'Level1': 'Level2',
       'Level2': 'Level3',
       'Level3': 'Level4',
-      'Level4': 'Credits',
+      'Level4': 'Level5',
+      'Level5': 'Level6',
+      'Level6': 'Credits',
     }
   }
 
   preload() {
+    //phaser.io assets
+    this.load.setBaseURL('http://labs.phaser.io');
+    this.load.image('leaf', 'assets/particles/leaf2.png');
+    this.load.image('bubble', 'assets/particles/bubble.png');
+
+
+    //codecademy assets
     this.load.image('platform', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/platform.png');
     this.load.image('snowflake', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/snowflake.png');
     this.load.spritesheet('campfire', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/campfire.png',
       { frameWidth: 32, frameHeight: 32});
     this.load.spritesheet('codey', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey.png', { frameWidth: 72, frameHeight: 90})
-
     this.load.image('bg1', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/mountain.png');
     this.load.image('bg2', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/trees.png');
     this.load.image('bg3', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/snowdunes.png');
@@ -34,12 +42,18 @@ class Level extends Phaser.Scene {
 
     this.createAnimations();
 
-    this.createSnow();
+    this.createBubbles();
 
     this.levelSetup();
-
+    /*
     this.cameras.main.setBounds(0, 0, gameState.bg3.width, gameState.bg3.height);
+
     this.physics.world.setBounds(0, 0, gameState.width, gameState.bg3.height + gameState.player.height);
+    */
+    //personal edit
+    this.cameras.main.setBounds(0, 0, 2000, 1000);
+    this.physics.world.setBounds(0, 0, 2000, 1000 + gameState.player.height);
+    //end personal edit
 
     this.cameras.main.startFollow(gameState.player, true, 0.5, 0.5)
     gameState.player.setCollideWorldBounds(true);
@@ -55,12 +69,13 @@ class Level extends Phaser.Scene {
     // Creates a platform evenly spaced along the two indices.
     // If either is not a number it won't make a platform
       if (typeof yIndex === 'number' && typeof xIndex === 'number') {
-        gameState.platforms.create((200 * xIndex),  yIndex * 70, 'platform').setOrigin(0, 0.5).refreshBody();
+        gameState.platforms.create((250 * xIndex),  yIndex * 70, 'platform').setOrigin(0, 0.5).refreshBody();
       }
   }
 
-  createSnow() {
-    gameState.particles = this.add.particles('snowflake');
+//particle storm
+  createBubbles() {
+    gameState.particles = this.add.particles('bubble');
 
     gameState.emitter = gameState.particles.createEmitter({
       x: {min: 0, max: config.width * 2 },
@@ -75,6 +90,7 @@ class Level extends Phaser.Scene {
 
     gameState.emitter.setScrollFactor(0);
   }
+
 
   createAnimations() {
     this.anims.create({
@@ -115,6 +131,7 @@ class Level extends Phaser.Scene {
     gameState.bg2.setOrigin(0, 0);
     gameState.bg3.setOrigin(0, 0);
 
+
     const game_width = parseFloat(gameState.bg3.getBounds().width)
     gameState.width = game_width;
     const window_width = config.width
@@ -134,8 +151,10 @@ class Level extends Phaser.Scene {
     }
 
     // Create the campfire at the end of the level
+    /*
     gameState.goal = this.physics.add.sprite(gameState.width - 40, 100, 'campfire');
-
+    */
+    gameState.goal = this.physics.add.sprite(1950, 100, 'campfire');
     this.physics.add.overlap(gameState.player, gameState.goal, function() {
       this.cameras.main.fade(200, 0, 0, 0, false, function(camera, progress) {
         if (progress > .9) {
@@ -166,14 +185,14 @@ class Level extends Phaser.Scene {
 
       if (Phaser.Input.Keyboard.JustDown(gameState.cursors.space) && gameState.player.body.touching.down) {
         gameState.player.anims.play('jump', true);
-        gameState.player.setVelocityY(-500);
+        gameState.player.setVelocityY(-800);
       }
 
       if (!gameState.player.body.touching.down){
         gameState.player.anims.play('jump', true);
       }
 
-      if (gameState.player.y > gameState.bg3.height) {
+      if (gameState.player.y > 1000) {
         this.cameras.main.shake(240, .01, false, function(camera, progress) {
           if (progress > .9) {
             this.scene.restart(this.levelKey);
@@ -187,7 +206,7 @@ class Level extends Phaser.Scene {
     function getStarPoints() {
       const color = 0xffffff;
       return {
-        x: Math.floor(Math.random() * 900),
+        x: Math.floor(Math.random() * 2000),
         y: Math.floor(Math.random() * config.height * .5),
         radius: Math.floor(Math.random() * 3),
         color,
@@ -206,23 +225,23 @@ class Level extends Phaser.Scene {
 
       'morning': {
         'color': 0xecdccc,
-        'snow':  1,
-        'wind':  20,
+        'snow':  0,
+        'wind':  0,
         'bgColor': 0xF8c3aC,
       },
 
       'afternoon': {
         'color': 0xffffff,
-        'snow':  1,
-        'wind': 80,
+        'snow':  0,
+        'wind': 0,
         'bgColor': 0x0571FF,
       },
 
       'twilight': {
         'color': 0xccaacc,
         'bgColor': 0x18235C,
-        'snow':  10,
-        'wind': 200,
+        'snow':  5,
+        'wind': 50,
       },
 
       'night': {
@@ -256,34 +275,51 @@ class Level extends Phaser.Scene {
 class Level1 extends Level {
   constructor() {
     super('Level1')
-    this.heights = [5, 3, 4, null, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
-    this.weather = 'afternoon';
+    this.heights = [12, 8, 6, 5, null, 6, null, 3];
+    this.weather = 'morning';
   }
 }
 
 class Level2 extends Level {
   constructor() {
     super('Level2')
-    this.heights = [5, 4, null, 4, 6, 4, 6, 5, 5];
-    this.weather = 'twilight';
+    this.heights = [7, 7, null, null, 6, null, 6, 5];
+    this.weather = 'afternoon';
   }
 }
 
 class Level3 extends Level {
   constructor() {
     super('Level3')
-    this.heights = [6, null, 6, 4, 6, 4, 5, null, 4];
-    this.weather = 'night';
+    this.heights = [6, null, 12, 6, 8, null, null, 4];
+    this.weather = 'twilight';
   }
 }
 
 class Level4 extends Level {
   constructor() {
     super('Level4')
-    this.heights = [4, null, 3, 6, null, 6, null, 5, 4];
+    this.heights = [null, 10, 10, 6, null, null, null, 5];
+    this.weather = 'night';
+  }
+}
+
+class Level5 extends Level {
+  constructor() {
+    super('Level5')
+    this.heights = [7, null, null, null, null, 6, null, 4];
+    this.weather = 'night';
+  }
+}
+
+class Level6 extends Level {
+  constructor() {
+    super('Level6')
+    this.heights = [null, null, 13, 7, null, 10, null, 3];
     this.weather = 'morning';
   }
 }
+
 
 class Credits extends Phaser.Scene {
   constructor() {
@@ -313,14 +349,14 @@ class Credits extends Phaser.Scene {
 }
 
 const gameState = {
-  speed: 240,
+  speed: 540,
   ups: 380,
 };
 
 const config = {
   type: Phaser.AUTO,
-  width: 1000,
-  height: 600,
+  width: 2000,
+  height: 1000,
   fps: {target: 60},
   backgroundColor: "b9eaff",
   physics: {
@@ -331,7 +367,7 @@ const config = {
 
     }
   },
-  scene: [Level1, Level2, Level3, Level4, Credits]
+  scene: [Level1, Level2, Level3, Level4, Level5, Level6, Credits]
 };
 
 const game = new Phaser.Game(config);
