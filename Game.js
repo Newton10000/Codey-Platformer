@@ -20,11 +20,26 @@ class Level extends Phaser.Scene {
 
 
     //codecademy assets
+      //Platform size: 220 x 50
     this.load.image('platform', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/platform.png');
+
     this.load.image('snowflake', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/snowflake.png');
     this.load.spritesheet('campfire', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/campfire.png',
       { frameWidth: 32, frameHeight: 32});
+
+
+
+      //codey size: 432 x 90. 6 sprites in sheets
+    /*
     this.load.spritesheet('codey', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey.png', { frameWidth: 72, frameHeight: 90})
+    */
+    //replace codey test
+
+    //frame width & height must equal width of each individual sprite. Otherwise game will crash
+    this.load.spritesheet('codey', 'assets/sprites/balls.png', { frameWidth: 17, frameHeight: 17})
+
+
+      //Mountain size: 600 x 600
     this.load.image('bg1', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/mountain.png');
     this.load.image('bg2', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/trees.png');
     this.load.image('bg3', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/snowdunes.png');
