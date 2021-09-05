@@ -37,15 +37,15 @@ class Level extends Phaser.Scene {
       { frameWidth: 32, frameHeight: 32});
     */
       //codey size: 432 x 90. 6 sprites in sheets
-    /*
+
     this.load.spritesheet('codey', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey.png', { frameWidth: 72, frameHeight: 90})
-    */
+
     //replace codey test
 
     //frame width & height must equal width of each individual sprite. Otherwise game will crash
-
+    /*
     this.load.spritesheet('codey', 'https://examples.phaser.io/assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18})
-
+    */
       //Mountain size: 600 x 600
     this.load.image('bg1', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/mountain.png');
     this.load.image('bg2', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/trees.png');
@@ -323,7 +323,7 @@ class Level3 extends Level {
 class Level4 extends Level {
   constructor() {
     super('Level4')
-    this.heights = [null, 10, 10, 6, null, null, null, 5];
+    this.heights = [null, 10, 10, 7, null, null, null, 5];
     this.weather = 'twilight';
   }
 }
@@ -356,9 +356,7 @@ class Credits extends Phaser.Scene {
 
     this.load.spritesheet('diamond', 'https://examples.phaser.io/assets/sprites/diamonds32x5.png',
       { frameWidth: 64, frameHeight: 64});
-    /*
-    this.load.spritesheet('codey_sled', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey_sled.png', { frameWidth: 81, frameHeight: 90 });
-    */
+    
   }
 
   create() {
@@ -371,24 +369,11 @@ class Credits extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     })
-    /*
-    gameState.player = this.add.sprite(config.width / 2, config.height / 2, 'codey_sled');
 
-    this.anims.create({
-      key: 'sled',
-      frames: this.anims.generateFrameNumbers('codey_sled'),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    gameState.player.angle = 20;
-    */
   }
 
   update() {
-    /*
-    gameState.player.anims.play('sled', true);
-    */
+
     gameState.player.anims.play('fire', true);
   }
 
