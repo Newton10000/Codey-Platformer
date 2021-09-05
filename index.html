@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Platformer</title>
+  <link rel="stylesheet" href="styles.css">
+  <title>Run (2) The Jewels</title>
   <style>
     canvas {
       width: 1000px;
@@ -13,9 +14,13 @@
 </head>
 
 <body>
-  <h1>Platformer</h1>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js"></script>
-  <script defer src="game.js"></script>
+  <h1 class="game_title">Run (2) The Jewels</h1>
+  <h2 class="instructions">Arrow Keys to move. Spacebar to jump</h2>
+  <h3 class="description">You're a little flea in a big world! Guide your very tiny character to the treasure at the end of the screen!</h3>
+  <div class="game_screen">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js"></script>
+    <script defer src="game.js"></script>
+  </div>
 </body>
 
 </html>

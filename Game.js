@@ -21,14 +21,21 @@ class Level extends Phaser.Scene {
 
     //codecademy assets
       //Platform size: 220 x 50
+      /*
     this.load.image('platform', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/platform.png');
+      */
 
+    this.load.image('platform', 'https://examples.phaser.io/assets/sprites/bluemetal_32x32x4.png');
     this.load.image('snowflake', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/snowflake.png');
-    this.load.spritesheet('campfire', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/campfire.png',
+
+
+    this.load.spritesheet('diamond', 'https://examples.phaser.io/assets/sprites/diamonds32x5.png',
+      { frameWidth: 64, frameHeight: 64});
+
+    /*
+    this.load.spritesheet('campfire', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/diamond.png',
       { frameWidth: 32, frameHeight: 32});
-
-
-
+    */
       //codey size: 432 x 90. 6 sprites in sheets
     /*
     this.load.spritesheet('codey', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey.png', { frameWidth: 72, frameHeight: 90})
@@ -36,8 +43,8 @@ class Level extends Phaser.Scene {
     //replace codey test
 
     //frame width & height must equal width of each individual sprite. Otherwise game will crash
-    this.load.spritesheet('codey', 'assets/sprites/balls.png', { frameWidth: 17, frameHeight: 17})
 
+    this.load.spritesheet('codey', 'https://examples.phaser.io/assets/sprites/chick.png', { frameWidth: 16, frameHeight: 18})
 
       //Mountain size: 600 x 600
     this.load.image('bg1', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/mountain.png');
@@ -117,8 +124,8 @@ class Level extends Phaser.Scene {
 
     this.anims.create({
       key: 'idle',
-      frames: this.anims.generateFrameNumbers('codey', { start: 4, end: 5 }),
-      frameRate: 10,
+      frames: this.anims.generateFrameNumbers('codey', { start: 0, end: 1 }),
+      frameRate: 0,
       repeat: -1
     });
 
@@ -131,7 +138,7 @@ class Level extends Phaser.Scene {
 
     this.anims.create({
       key: 'fire',
-      frames: this.anims.generateFrameNumbers('campfire'),
+      frames: this.anims.generateFrameNumbers('diamond', { start: 0, end: 4 }),
       frameRate: 10,
       repeat: -1
     })
@@ -140,7 +147,7 @@ class Level extends Phaser.Scene {
   createParallaxBackgrounds() {
     gameState.bg1 = this.add.image(0, 0, 'bg1');
     gameState.bg2 = this.add.image(0, 0, 'bg2');
-    gameState.bg3 = this.add.image(0, 0, 'bg3');
+    gameState.bg3 = this.add.image(0, 400, 'bg3');
 
     gameState.bg1.setOrigin(0, 0);
     gameState.bg2.setOrigin(0, 0);
@@ -165,11 +172,11 @@ class Level extends Phaser.Scene {
       this.createPlatform(xIndex, yIndex);
     }
 
-    // Create the campfire at the end of the level
+    // Create the diamond at the end of the level
     /*
-    gameState.goal = this.physics.add.sprite(gameState.width - 40, 100, 'campfire');
+    gameState.goal = this.physics.add.sprite(gameState.width - 40, 100, 'diamond');
     */
-    gameState.goal = this.physics.add.sprite(1950, 100, 'campfire');
+    gameState.goal = this.physics.add.sprite(1850, 100, 'diamond');
     this.physics.add.overlap(gameState.player, gameState.goal, function() {
       this.cameras.main.fade(200, 0, 0, 0, false, function(camera, progress) {
         if (progress > .9) {
@@ -222,7 +229,7 @@ class Level extends Phaser.Scene {
       const color = 0xffffff;
       return {
         x: Math.floor(Math.random() * 2000),
-        y: Math.floor(Math.random() * config.height * .5),
+        y: Math.floor(Math.random() * config.height * .8),
         radius: Math.floor(Math.random() * 3),
         color,
       }
@@ -240,16 +247,16 @@ class Level extends Phaser.Scene {
 
       'morning': {
         'color': 0xecdccc,
-        'snow':  0,
+        'snow':  1,
         'wind':  0,
         'bgColor': 0xF8c3aC,
       },
 
       'afternoon': {
         'color': 0xffffff,
-        'snow':  0,
+        'snow':  0.1,
         'wind': 0,
-        'bgColor': 0x0571FF,
+        'bgColor': 0xB2FFFF,
       },
 
       'twilight': {
@@ -279,6 +286,8 @@ class Level extends Phaser.Scene {
     }
     if (weather === 'night') {
       gameState.stars.forEach(star => star.setVisible(true));
+    } else if (weather === 'twilight') {
+      gameState.stars.forEach(star => star.setVisible(true));
     } else {
       gameState.stars.forEach(star => star.setVisible(false));
     }
@@ -298,7 +307,7 @@ class Level1 extends Level {
 class Level2 extends Level {
   constructor() {
     super('Level2')
-    this.heights = [7, 7, null, null, 6, null, 6, 5];
+    this.heights = [7, 7, null, null, 11, null, 7, 5];
     this.weather = 'afternoon';
   }
 }
@@ -306,7 +315,7 @@ class Level2 extends Level {
 class Level3 extends Level {
   constructor() {
     super('Level3')
-    this.heights = [6, null, 12, 6, 8, null, null, 4];
+    this.heights = [12, null, 12, 6, 8, null, null, 4];
     this.weather = 'twilight';
   }
 }
@@ -322,7 +331,7 @@ class Level4 extends Level {
 class Level5 extends Level {
   constructor() {
     super('Level5')
-    this.heights = [7, null, null, null, null, 6, null, 4];
+    this.heights = [7, null, null, null, 5, null, null, 4];
     this.weather = 'night';
   }
 }
@@ -330,22 +339,39 @@ class Level5 extends Level {
 class Level6 extends Level {
   constructor() {
     super('Level6')
-    this.heights = [null, null, 13, 7, null, 10, null, 3];
+    this.heights = [null, null, 13, 7, null, 10, null, 4];
     this.weather = 'morning';
   }
 }
 
 
 class Credits extends Phaser.Scene {
+
+
   constructor() {
     super('Credits')
   }
 
   preload() {
+
+    this.load.spritesheet('diamond', 'https://examples.phaser.io/assets/sprites/diamonds32x5.png',
+      { frameWidth: 64, frameHeight: 64});
+    /*
     this.load.spritesheet('codey_sled', 'https://content.codecademy.com/courses/learn-phaser/Codey%20Tundra/codey_sled.png', { frameWidth: 81, frameHeight: 90 });
+    */
   }
 
   create() {
+
+    gameState.player = this.add.sprite(config.width / 2, config.height / 2, 'diamond');
+
+    this.anims.create({
+      key: 'fire',
+      frames: this.anims.generateFrameNumbers('diamond', { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: -1
+    })
+    /*
     gameState.player = this.add.sprite(config.width / 2, config.height / 2, 'codey_sled');
 
     this.anims.create({
@@ -356,11 +382,16 @@ class Credits extends Phaser.Scene {
     })
 
     gameState.player.angle = 20;
+    */
   }
 
   update() {
+    /*
     gameState.player.anims.play('sled', true);
+    */
+    gameState.player.anims.play('fire', true);
   }
+
 }
 
 const gameState = {

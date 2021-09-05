@@ -1,0 +1,29 @@
+h1.game_title {
+  text-align: center;
+  color: white;
+  font-family: Optima, sans-serif;
+}
+
+h2.instructions {
+  text-align: center;
+  color: white;
+  font-family: Optima, sans-serif;
+}
+
+h3.description {
+  text-align: center;
+  color: white;
+  font-family: Optima, sans-serif;
+}
+
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  border-style: inset;
+}
+
+body {
+  background: linear-gradient(to top, #58151A, #BC2909, #BA6D09, #71A8EE, #3072EB, #1552C6, #0542A8);
+  background-attachment: fixed;
+}
