@@ -15,8 +15,8 @@ class Level extends Phaser.Scene {
   preload() {
     //phaser.io assets
     this.load.setBaseURL('http://labs.phaser.io');
-    this.load.image('leaf', 'assets/particles/leaf2.png');
-    this.load.image('bubble', 'assets/particles/bubble.png');
+    this.load.image('leaf', 'https://labs.phaser.io/assets/particles/leaf2.png');
+    this.load.image('bubble', 'https://labs.phaser.io/assets/particles/bubble.png');
 
 
     //codecademy assets
@@ -324,7 +324,7 @@ class Level4 extends Level {
   constructor() {
     super('Level4')
     this.heights = [null, 10, 10, 6, null, null, null, 5];
-    this.weather = 'night';
+    this.weather = 'twilight';
   }
 }
 
